@@ -1,10 +1,21 @@
-echo -n "JAMULUS RECORDING REMOTE INSTALLATION v0.6. Are you sure?  (y/n)? "
-read answer
+#!/bin/bash 
+
+answer="y"
+
+if [ "$1" != "-y" ]; then
+    echo -n "JAMULUS RECORDING REMOTE INSTALLATION v0.6. Are you sure?  (y/n)? "
+    read answer
+fi
+
 if [ "$answer" != "${answer#[Yy]}" ] ;then
+  
+  if [ "$1" != "-y" ]; then
+     sudo apt-get install apache2 php libapache2-mod-php ffmpeg acl
+  else
+     sudo apt-get -y install apache2 php libapache2-mod-php ffmpeg acl
+  fi
 
-  sudo apt-get install apache2 php libapache2-mod-php ffmpeg acl
-
-# prepare web document root
+  # prepare web document root
   sudo rm /var/www/html/index.html
   sudo cp *.php /var/www/html/
   sudo chown -R www-data /var/www/html/
